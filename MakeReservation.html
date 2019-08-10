@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="server.js"></script>
+    <script src="reservation.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4">Hot Restaurant</h1>
+      <p class="lead">
+        This is a simple hero unit, a simple jumbotron-style component for
+        calling extra attention to featured content or information.
+      </p>
+      <a class="btn btn-primary btn-lg" href="ViewTables" role="button"
+        >View Tables</a
+      >
+      <a class="btn btn-secondary" href="/" role="button">Home</a>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" class="form-control" id="ph-num-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email-inpt"
+          aria-describedby="emailHelp"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >We'll never share your email with anyone else.</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="uniqueId">Unique ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="ID-input"
+          aria-describedby="emailHelp"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >We'll never share your email with anyone else.</small
+        >
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+    </form>
+
+    <a href="/api/tables">API Table Link</a>
+    |
+    <a href="/api/wait-list"> API Wait List</a>
+
+    <script>
+      $(document).ready(() => {
+        $("#submit").on("click", function(event) {
+          event.preventDefault();
+          console.log(1);
+          var newReservation;
+          var newReservation = {
+            customerName: $("#name-input")
+              .val()
+              .trim(),
+            phoneNumber: $("#ph-num-input")
+              .val()
+              .trim(),
+            customerEmail: $("#email-inpt")
+              .val()
+              .trim(),
+            customerID: $("#ID-input")
+              .val()
+              .trim()
+          };
+          $.post("/api/reservations", newReservation).then(function(data) {
+            console.log("add.html", data);
+            window.location.href = "http://localhost:3000/ViewTables";
+            alert("Making reservation...");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
